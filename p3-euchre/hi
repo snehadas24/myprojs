@@ -1,0 +1,224 @@
+// class Game {
+//  public:
+//   Game(Pack pack, bool shuffle, int pts_to_win, vector<Player*> players)
+//   :pack(pack), shuffle(shuffle), pts_to_win(pts_to_win), players(players){}
+//   void play(){
+//     team_one.push_back(players.at(0));
+//     team_two.push_back(players.at(1));
+//     team_one.push_back(players.at(2));
+//     team_two.push_back(players.at(3));
+//     while (team_one_pts < pts_to_win && team_two_pts< pts_to_win){
+
+//     for(int i = 0; i<5; i++){
+//         cout << "Hand " << i << endl;
+//         cout << players.at(0) << " deals"<< endl;
+//         int team_dealing = check_team(players.at(0));
+//         int one_wins = 0;
+//         int two_wins = 0;
+//     //shuffle & deal
+//     Card upcard = shuffle_and_deal(shuffle);
+//     cout << upcard << " turned up"<<endl;
+//     Suit upcardsuit = upcard.get_suit();
+//     // make trump
+    
+//     make_trumpGame(players, upcard, upcardsuit);
+
+//     //trick playing
+//     int leader_indx =1;
+//     for(int i = 0 ; i< 5; i++){
+        
+//         vector<Card> cards_played;
+//         Card led = players.at(leader_indx)->lead_card(trump);
+//         cout << led << " led  by " <<players.at(leader_indx) <<endl;
+//         cards_played.push_back(led);
+//         int currplayer = leader_indx+1 ;
+//         for(int i = 0; i<4; i++){
+//             if(currplayer == 4){
+//                 currplayer = 0;
+//             }
+//             Card played = players.at(currplayer)->play_card(led, trump);
+//             cards_played.push_back(played);
+//             cout << led << " played  by " <<players.at(currplayer) <<endl;
+//             currplayer++;
+//         }
+//         Player* winner = won_round(leader_indx, led, cards_played);
+//         cout << winner << " takes the trick"<<endl <<endl;
+//         int team = check_team(winner);
+//         if(team == 1){
+//             one_wins++;
+//         }else{
+//             two_wins++;
+//         }
+    
+//     }
+//     vector<Player*> winning_team;
+//     if (one_wins> two_wins){
+//         winning_team = team_one;
+//     }else{
+//         winning_team = team_two;
+//     }
+//     cout << winning_team.at(0) << " and  " << winning_team.at(1) << " win the hand" <<endl;
+//     // scoring
+//     if( (one_wins >= 3) && (one_wins < 5)&& (team_dealing == 1)){
+//         team_one_pts +=1;
+//     }else if((two_wins >= 3) && (two_wins < 5)&& (team_dealing == 2)){
+//         team_two_pts++;
+//     }else if(one_wins == 5 && team_dealing ==1){
+//         team_one_pts +=2;
+//         cout << "marched!"<<endl;
+//     }else if(two_wins == 5 && team_dealing ==2){
+//         team_two_pts +=2;
+//         cout << "marched!"<<endl;
+//     }else if (one_wins >=3 && team_dealing == 2){
+//         team_one_pts +=2;
+//         cout << "euchred!"<<endl;
+//     }else if(two_wins >=3 && team_dealing == 1){
+//         team_two_pts +=2;
+//         cout << "euchred!"<<endl;
+//     }
+//     cout << team_one.at(0) << " and " << team_one.at(1) << " have " <<team_one_pts<< " points" <<endl;
+//     cout << team_two.at(0) << " and " << team_two.at(1) << " have " <<team_two_pts<< " points" <<endl << endl;
+//     new_dealer();
+//   }
+//     }
+//   if (team_one_pts>= pts_to_win){
+//     cout << team_one.at(0) << " and "<< team_one.at(1) << " win!"<<endl;
+//   }else{
+//     cout << team_two.at(0) << " and "<< team_two.at(1) << " win!"<<endl;
+//   }
+//   };
+
+//  private:
+  
+//   Pack pack;
+//   bool shuffle;
+//   int team_one_pts, team_two_pts, pts_to_win;
+//   std::vector<Player*> players, team_one, team_two;
+//   int dealer_index;
+//   Suit trump;
+
+//   Card shuffle_and_deal(bool shuffle){
+//     if(shuffle == true){
+//         pack.shuffle();
+//     }
+//     players.at(0)->add_card(pack.deal_one());
+//     players.at(0)->add_card(pack.deal_one());
+//     players.at(0)->add_card(pack.deal_one());
+//     players.at(1)->add_card(pack.deal_one());
+//     players.at(1)->add_card(pack.deal_one());
+//     players.at(2)->add_card(pack.deal_one());
+//     players.at(2)->add_card(pack.deal_one());
+//     players.at(2)->add_card(pack.deal_one());
+//     players.at(3)->add_card(pack.deal_one());
+//     players.at(3)->add_card(pack.deal_one());
+//     players.at(0)->add_card(pack.deal_one());
+//     players.at(0)->add_card(pack.deal_one());
+//     players.at(1)->add_card(pack.deal_one());
+//     players.at(1)->add_card(pack.deal_one());
+//     players.at(1)->add_card(pack.deal_one());
+//     players.at(2)->add_card(pack.deal_one());
+//     players.at(2)->add_card(pack.deal_one());
+//     players.at(3)->add_card(pack.deal_one());
+//     players.at(3)->add_card(pack.deal_one());
+//     players.at(3)->add_card(pack.deal_one());
+//     Card upcard = pack.deal_one();
+//     pack.reset();
+//     return upcard;
+//   };
+//   void deal(/* ... */);
+//   void make_trump(/* ... */);
+//   void play_hand(/* ... */);
+//   void new_dealer(){
+//     players.push_back(players.at(0));
+//     players.erase(players.begin());
+//   }
+//     void make_trumpGame(std::vector<Player*> players, Card &upcard, Suit &orderUpSuit){
+//         int round = 1;
+//         int i = 1;
+//         bool isDealer = false;
+//         while(!players[i]->make_trump(upcard, isDealer,
+//                                       round, orderUpSuit)){
+//             cout << players[i] << " passes" << endl;
+//             if (i == 0){
+//                 round =2;
+//             }
+//             i++;
+//             if (i > 3){
+//                 i = 0;
+//                 isDealer = true;
+//             }else{
+//                 isDealer = false;
+//             }
+//         }
+//         cout << players[i] << " orders up " << orderUpSuit << endl << endl;
+//         trump = orderUpSuit;
+//         players[0]->add_and_discard(upcard);
+//     }
+//   Player* won_round(int leader_indx, Card led_card, vector<Card> played_cards){
+//     int highestindx =0;
+//     Card highest = played_cards.at(0);
+//     for (int i = 1; i< 5; i++){
+//         if(Card_less(highest, played_cards.at(i), trump)){
+//             highest = played_cards.at(i);
+//             highestindx = i;
+//         }
+//     }  
+//     int winnerindx = (leader_indx + highestindx)%4;
+//     Player* winner = players.at(winnerindx);
+//     return winner;
+//     }
+
+//   int check_team(Player* p){
+//     if (p == team_one.at(0) || p == team_one.at(1)){
+//         return 1;
+//     }
+//     return 2;
+//   }
+//   };
+
+
+
+//REQUIRES round is 1 or 2
+    //MODIFIES order_up_suit
+    //EFFECTS If Player wishes to order up a trump suit then return true and
+    //  change order_up_suit to desired suit.  If Player wishes to pass, then do
+    //  not modify order_up_suit and return false.
+    
+    //  bool make_trump(const Card &upcard, bool is_dealer,
+    //  int round, Suit &order_up_suit) const{
+    //     bool orderup = false;
+    //     Suit upcardsuit = upcard.get_suit();
+    //     int highcardcount = 0;
+    //     if (round == 1){  
+    //         for(int i = 0; i<5; i++){
+    //             const Card c= hand[i];
+    //             Rank r = c.get_rank();
+    //             if (c.get_suit(upcardsuit) == upcardsuit && (r == string_to_rank("Jack") || r == string_to_rank("Queen") || 
+    //                                                     r == string_to_rank("King") || r == string_to_rank("Ace") )){
+    //                 highcardcount++;
+    //             }
+    //         }
+    //         if (highcardcount>=2){
+    //             orderup = true;
+    //             order_up_suit = upcardsuit;
+    //         }
+    //     }else{
+    //         Suit newtrump = Suit_next(upcardsuit);
+    //         for(int i = 0; i<5; i++){
+    //             const Card c= hand[i];
+    //             Rank r = c.get_rank();
+    //             if (c.get_suit(newtrump) == newtrump && (r == string_to_rank("Jack") || r == string_to_rank("Queen") || 
+    //                                                     r == string_to_rank("King") || r == string_to_rank("Ace") )){
+    //                 highcardcount++;
+    //             }
+    //         }if (is_dealer){
+    //             order_up_suit = newtrump;
+    //             orderup == true;
+    //         }
+    //         else if (highcardcount>=1){
+    //             orderup = true;
+    //             order_up_suit = newtrump;
+    //         }
+    //     }
+    //     return orderup;
+    //  }
